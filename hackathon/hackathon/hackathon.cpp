@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <stdint.h>
 #include <vector>
 #define STB_IMAGE_IMPLEMENTATION
@@ -19,10 +21,17 @@ int main()
 		image.push_back(rgb_image[i]);
 	}
 	stbi_image_free(rgb_image);
-	for (int x : image)
-		std::cout << x << std::endl;
-
-
+	//for (int x : image)
+	//	std::cout << x << std::endl;
+	std::vector < string > text;
+	std::ofstream file ("log.txt");
+	if (file.good()) {
+		
+		file >> 
+	}
+	else {
+		return -1;
+	}
 
 
 
