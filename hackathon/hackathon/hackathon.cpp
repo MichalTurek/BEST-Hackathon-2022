@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdint.h>
+#include <vector>
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image.h"
@@ -7,7 +8,26 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	int width, height, bpp;
+
+	uint8_t* rgb_image = stbi_load("szyfr_1.png", &width, &height, &bpp, 3);
+	if (rgb_image == NULL) {
+		return -1;
+	}
+	std::vector < int > image;
+	for (int i = 0; i < width * height; i++) {
+		image.push_back(rgb_image[i]);
+	}
+	stbi_image_free(rgb_image);
+	for (int x : image)
+		std::cout << x << std::endl;
+
+
+
+
+
+
+	
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
