@@ -18,5 +18,8 @@
     <ClCompile Include="hackathon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="text_detection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

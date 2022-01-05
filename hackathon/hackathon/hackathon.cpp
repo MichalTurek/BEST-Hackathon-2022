@@ -3,6 +3,11 @@
 #include <string>
 #include <stdint.h>
 #include <vector>
+#include <opencv2/opencv.hpp>
+#include <algorithm>
+
+using std::find_if;
+using namespace cv;
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image.h"
@@ -27,53 +32,71 @@ struct pixel_data
         green(green),
         blue(blue)
         {};
-    int get_key_of_color() const {
-        return 256*256 * red + 256 * green + blue;
+ 
+    bool operator == (const pixel_data & pixel)
+    {
+        return this->red == pixel.red && this->green == pixel.green && this->blue == pixel.blue;
     }
-
+    struct hash {
+        std::size_t operator()(pixel_data const& p) const noexcept
+        {
+            std::size_t h1 = p.red << (p.green + 7);
+            std::size_t h2 = p.blue;
+            return h1 ^ (h2 << 1);
+        }
+    };
+    
 
 };
-int main()
+bool operator == (const pixel_data& pixel, const pixel_data& pixel_2)
 {
+    return pixel_2.red == pixel.red && pixel_2.green == pixel.green && pixel_2.blue == pixel.blue;
+};
+
+
+int main(int argc, char* argv[])
+{
+   
     int width, height, bpp;
 
-    uint8_t* rgb_image = stbi_load("szyfr_1.png", &width, &height, &bpp, 3);
+    uint8_t* rgb_image = stbi_load("szyfr_2.png", &width, &height, &bpp, 3);
     if (rgb_image == NULL) {
         return -1;
     }
-    std::vector <pixel_data > image;
+    std::vector <pixel_data> image;
     for (int i = 0; i <3* width * height; i+=3) {
         pixel_data act_pixel(rgb_image[i], rgb_image[i + 1], rgb_image[i + 2]);
         image.push_back(act_pixel);
     }
     stbi_image_free(rgb_image);
-    std::unordered_map<int, int> color_counter;
+    std::unordered_map<pixel_data, int,pixel_data::hash> color_counter;
     for (auto pixel : image)
     {
-        if (color_counter.find(pixel.get_key_of_color()) == color_counter.end()) {
+        if (color_counter.find(pixel) == color_counter.end()) {
             
-            color_counter.insert(std::pair<int,int>(pixel.get_key_of_color(),0));
+            color_counter.insert(std::pair<pixel_data,int>(pixel,0));
         }
         else
         {
-            auto it = color_counter.find(pixel.get_key_of_color());
+            auto it = color_counter.find(pixel);
             it->second++;
         }
     }
     for (auto& pixel : image)
     {
-        auto it = color_counter.find(pixel.get_key_of_color());
+        auto it = color_counter.find(pixel);
         if (it->second >= 1500)
+        {
+           
+            pixel.red = 255;
+            pixel.green = 255;
+            pixel.blue = 255;
+        }
+        else
         {
             pixel.red = 0;
             pixel.green = 0;
             pixel.blue = 0;
-        }
-        else
-        {
-            pixel.red = 255;
-            pixel.green = 255;
-            pixel.blue = 255;
         }
     }
     uint8_t* just_text_image = new uint8_t[3 * width * height];
@@ -86,20 +109,14 @@ int main()
         x++;
     }
     stbi_write_jpg("image.png", width, height, 3, just_text_image, width * 3);
+    Mat image_to_blur = imread("image.png");
+    Mat blurred_image;
 
-    std::vector < std::string > text;
-    std::ifstream file ("w_pustyni_i_w_puszczy.txt");
-    std::string s;
-    if (file.good()) 
-    {
-        while (file >> s)
-        {
-            text.push_back(s);
-        }
-
-    }
+    blurred_image.release();
+    image_to_blur.release();
+    
 
 
-
-
+    
+   
 }
