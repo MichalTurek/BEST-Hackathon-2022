@@ -102,8 +102,8 @@ private:
 };
 std::vector <std::string> decryption(std::string encoded_string, int key)
 {
-  std::string alfabet1 = "a¹bcædeêfghijkl³mnñoópqrsœtuvwxyzŸ¿";
-  std::string alfabet2 = "A¥BCÆDEÊFGHIJKL£MNÑOÓPQRSŒTUVWXYZ¯";
+  std::string alfabet1 = "aÂ¹bcÃ¦deÃªfghijklÂ³mnÃ±oÃ³pqrsÅ“tuvwxyzÅ¸Â¿";
+  std::string alfabet2 = "AÂ¥BCÃ†DEÃŠFGHIJKLÂ£MNÃ‘OÃ“PQRSÅ’TUVWXYZÂÂ¯";
   std::string przyklad = encoded_string;
 
   std::string przyklad2 = przyklad;
@@ -144,75 +144,75 @@ std::vector <std::string> decryption(std::string encoded_string, int key)
     else if ((przyklad2[i] >= 'a' && przyklad2[i] <= 'z') || (przyklad2[i] >= 'A' && przyklad2[i] <= 'Z')) {
       szyfr[j].push_back(przyklad2[i]);
     }
-    else if (przyklad2[i] == '¹') {
+    else if (przyklad2[i] == 'Â¹') {
       szyfr[j].push_back(0xC4);
       szyfr[j].push_back(0x85);
     }
-    else if (przyklad2[i] == 'ê') {
+    else if (przyklad2[i] == 'Ãª') {
       szyfr[j].push_back(0xC4);
       szyfr[j].push_back(0x99);
     }
-    else if (przyklad2[i] == 'æ') {
+    else if (przyklad2[i] == 'Ã¦') {
       szyfr[j].push_back(0xC4);
       szyfr[j].push_back(0x87);
     }
-    else if (przyklad2[i] == '³') {
+    else if (przyklad2[i] == 'Â³') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0x82);
     }
-    else if (przyklad2[i] == 'ñ') {
+    else if (przyklad2[i] == 'Ã±') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0x84);
     }
-    else if (przyklad2[i] == 'ó') {
+    else if (przyklad2[i] == 'Ã³') {
       szyfr[j].push_back(0xC3);
       szyfr[j].push_back(0xB3);
     }
-    else if (przyklad2[i] == 'Ÿ') {
+    else if (przyklad2[i] == 'Å¸') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0xBA);
     }
-    else if (przyklad2[i] == '¿') {
+    else if (przyklad2[i] == 'Â¿') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0xBC);
     }
-    else if (przyklad2[i] == 'œ') {
+    else if (przyklad2[i] == 'Å“') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0x9B);
     }
-    else if (przyklad2[i] == '¥') {
+    else if (przyklad2[i] == 'Â¥') {
       szyfr[j].push_back(0xC4);
       szyfr[j].push_back(0x84);
     }
-    else if (przyklad2[i] == 'Ê') {
+    else if (przyklad2[i] == 'ÃŠ') {
       szyfr[j].push_back(0xC4);
       szyfr[j].push_back(0x98);
     }
-    else if (przyklad2[i] == 'Æ') {
+    else if (przyklad2[i] == 'Ã†') {
       szyfr[j].push_back(0xC4);
       szyfr[j].push_back(0x86);
     }
-    else if (przyklad2[i] == '£') {
+    else if (przyklad2[i] == 'Â£') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0x81);
     }
-    else if (przyklad2[i] == 'Ñ') {
+    else if (przyklad2[i] == 'Ã‘') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0x83);
     }
-    else if (przyklad2[i] == 'Ó') {
+    else if (przyklad2[i] == 'Ã“') {
       szyfr[j].push_back(0xC3);
       szyfr[j].push_back(0x93);
     }
-    else if (przyklad2[i] == '') {
+    else if (przyklad2[i] == 'Â') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0xB9);
     }
-    else if (przyklad2[i] == '¯') {
+    else if (przyklad2[i] == 'Â¯') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0xBB);
     }
-    else if (przyklad2[i] == 'Œ') {
+    else if (przyklad2[i] == 'Å’') {
       szyfr[j].push_back(0xC5);
       szyfr[j].push_back(0x9A);
     }
