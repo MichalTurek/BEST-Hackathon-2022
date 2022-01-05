@@ -37,7 +37,7 @@ int main()
 {
     int width, height, bpp;
 
-    uint8_t* rgb_image = stbi_load("szyfr_1.png", &width, &height, &bpp, 3);
+    uint8_t* rgb_image = stbi_load("szyfr_2.png", &width, &height, &bpp, 3);
     if (rgb_image == NULL) {
         return -1;
     }
@@ -87,10 +87,152 @@ int main()
     }
     stbi_write_jpg("image.png", width, height, 3, just_text_image, width * 3);
 
+   
+
+    std::string alfabet1 = "aπbcÊdeÍfghijkl≥mnÒoÛpqrsútuvwxyzüø";
+    std::string alfabet2 = "A•BC∆DE FGHIJKL£MN—O”PQRSåTUVWXYZèØ";
+    std::string przyklad = "Íuhúe tphøπh smgikm ÊÍ≥úbg rhuhúb h tphuw Êpkpm";
+    std::cout << przyklad << std::endl;
+    
+    std::string przyklad2 = przyklad;
+    for (int i = 0; i < przyklad.length() ; i++) {
+        if (przyklad[i] == ' ') {
+            continue;
+        }
+        int j = 0;
+        bool wielka = false;
+        while (true) {
+            if (alfabet1[j] == przyklad[i]) {
+                break;
+            }
+            if (alfabet2[j] == przyklad[i]) {
+                wielka = true;
+                break;
+            }
+            j++;
+        }
+        int x = 25;
+        j += x;
+        j = j % 35;
+        if (wielka) {
+            przyklad2[i] = alfabet2[j];
+        }
+        else {
+            przyklad2[i] = alfabet1[j];
+        }
+    }
+
+    std::cout << przyklad2 << std::endl;
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    std::vector <std::string> szyfr;
+    szyfr.push_back("");
+    int j = 0;
+    for (int i = 0; i < przyklad2.length(); i++) {
+        if (przyklad2[i] == ' ') {
+            szyfr.push_back("");
+            j++;
+        }
+        else if ((przyklad2[i] >= 'a' && przyklad2[i] <='z') || (przyklad2[i] >= 'A' && przyklad2[i] <= 'Z')) {
+            szyfr[j].push_back(przyklad2[i]);
+        }
+        else if (przyklad2[i] == 'π') {
+            szyfr[j].push_back(0xC4);
+            szyfr[j].push_back(0x85);
+        }
+        else if (przyklad2[i] == 'Í') {
+            szyfr[j].push_back(0xC4);
+            szyfr[j].push_back(0x99);
+        }
+        else if (przyklad2[i] == 'Ê') {
+            szyfr[j].push_back(0xC4);
+            szyfr[j].push_back(0x87);
+        }
+        else if (przyklad2[i] == '≥') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0x82);
+        }
+        else if (przyklad2[i] == 'Ò') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0x84);
+        }
+        else if (przyklad2[i] == 'Û') {
+            szyfr[j].push_back(0xC3);
+            szyfr[j].push_back(0xB3);
+        }
+        else if (przyklad2[i] == 'ü') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0xBA);
+        }
+        else if (przyklad2[i] == 'ø') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0xBC);
+        }
+        else if (przyklad2[i] == 'ú') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0x9B);
+        }
+        else if (przyklad2[i] == '•') {
+            szyfr[j].push_back(0xC4);
+            szyfr[j].push_back(0x84);
+        }
+        else if (przyklad2[i] == ' ') {
+            szyfr[j].push_back(0xC4);
+            szyfr[j].push_back(0x98);
+        }
+        else if (przyklad2[i] == '∆') {
+            szyfr[j].push_back(0xC4);
+            szyfr[j].push_back(0x86);
+        }
+        else if (przyklad2[i] == '£') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0x81);
+        }
+        else if (przyklad2[i] == '—') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0x83);
+        }
+        else if (przyklad2[i] == '”') {
+            szyfr[j].push_back(0xC3);
+            szyfr[j].push_back(0x93);
+        }
+        else if (przyklad2[i] == 'è') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0xB9);
+        }
+        else if (przyklad2[i] == 'Ø') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0xBB);
+        }
+        else if (przyklad2[i] == 'å') {
+            szyfr[j].push_back(0xC5);
+            szyfr[j].push_back(0x9A);
+        }
+        else {
+            szyfr[j].push_back('?');
+        }
+    }
     std::vector < std::string > text;
     std::ifstream file ("w_pustyni_i_w_puszczy.txt");
     std::string s;
-    if (file.good()) 
+    if (file.good())
     {
         while (file >> s)
         {
@@ -98,8 +240,50 @@ int main()
         }
 
     }
+    int begin = 0, end;
+    /*for (auto word : text) {
+        std::cout << word << ' ';
+    }
+    std::cout << std::endl;
+    for (auto word : szyfr) {
+        std::cout << word << ' ';
+    }*/
+    
 
 
 
+
+
+
+
+
+
+
+
+
+    while (begin < text.size()) {
+        if (text[begin] == szyfr[0]) {
+            bool found = true;
+            for (int i = 0; i < szyfr.size(); i++) {
+                if (text[begin + i] != szyfr[i]) {
+                    found = false;
+                    break;
+                }
+                end++;
+            }
+            if (found) {    
+                break;
+            }
+            
+        }
+
+        begin++;
+        end = begin;
+
+    }
+    begin++;
+    end++;
+    std::cout << begin << ' ' << end << std::endl;
+    
 
 }
